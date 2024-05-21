@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joint Venture</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Playfair+Display:wght@700&family=Montserrat:wght@600&display=swap');
+        body {
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 2;
+            color: #333;
+        }
+
+        .overlay h1 {
+            margin: 0;
+            font-size: 4em;
+            color: #333;
+            text-shadow: 1px 1px 5px #ffd1dc;
+            /* pastel pink outline */
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+        }
+
+        .overlay p {
+            margin: 5px 0 0;
+            font-size: 1.5em;
+            color: #666666;
+            font-style: italic;
+        }
+
+        .overlay .whimsical-line {
+            width: 90%;
+            height: 10px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 10"><path d="M0 5 Q 50 0 100 5 T 200 5" stroke="%23fff9c4" stroke-width="3" fill="none"/></svg>') center/cover no-repeat;
+            margin: 20px auto;
+        }
+
+        .content {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .left,
+        .right {
+            width: 50%;
+            overflow: auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .left {
+            background: #f7f7f7;
+            background: linear-gradient(45deg, #f7f7f7 25%, #e6f5d0 25%, #e6f5d0 50%, #f7f7f7 50%, #f7f7f7 75%, #e6f5d0 75%, #e6f5d0) 50%, #f7f7f7;
+        }
+
+        .right {
+            background: #2a2a2a;
+            background: linear-gradient(45deg, #2a2a2a 25%, #e6f5d0 25%, #e6f5d0 50%, #2a2a2a 50%, #2a2a2a 75%, #e6f5d0 75%, #e6f5d0) 50%, #2a2a2a;
+            color: white;
+        }
+
+        .left-content,
+        .right-content {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .left-content {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+
+        .right-content {
+            max-width: 600px;
+            margin-top: 150px;
+        }
+
+        .right h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 1px 1px 5px black;
+        }
+
+        .right p {
+            font-size: 1.2em;
+            color: #aaaaaa;
+        }
+
+        .photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #ffd1dc;
+            overflow: hidden;
+            margin: 20px auto;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-text {
+            font-size: 0.8em;
+            color: #333;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .photo-text span {
+            display: block;
+        }
+
+        .photo-text-white {
+            font-size: 0.8em;
+            color: white;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .photo-text-white span {
+            display: block;
+        }
+
+        .blend {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 20%;
+            background: linear-gradient(to right, #f7f7f7, #2a2a2a);
+            z-index: 0;
+        }
+
+        .middle-button {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            font-size: 1em;
+            background: #ffd1dc;
+            color: #2a2a2a;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            z-index: 1;
+            transition: background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .middle-button:hover {
+            background: linear-gradient(45deg, #ffd1dc, #e6f5d0);
+            color: white;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .left::before,
+        .right::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-image: url('left-splotches.png'), url('right-splotches.png');
+            background-size: 300px 300px;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .left::before {
+            background-position: left top, right bottom;
+        }
+
+        .right::before {
+            background-position: right top, left bottom;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay">
+        <h1>Social Solutions</h1>
+        <p>Social success comes with social problems. We have the solutions.</p>
+        <div class="whimsical-line"></div>
+    </div>
+    <div class="content">
+        <div class="left">
+            <div class="left-content">
+                <h1>Viral by Design Course & Community</h1>
+                <p>Imagine waking up in the morning, excited knowing exactly what you're posting and knowing that the content you're putting out is actually reaching your ideal audience...</p>
+                <a href="https://www.instagram.com/whitneybartlette.social/" target="_blank">
+                    <div class="photo">
+                        <img src="C:/Users/18437/Pictures/whitney/IMG_1664.jpeg" alt="Course Image">
+                    </div>
+                </a>
+                <div class="photo-text">
+                    <span>Whitneybartlette.social</span>
+                    <span>Co-Founder/ Creative Director</span>
+                </div>
+            </div>
+        </div>
+        <div class="blend"></div>
+        <div class="right">
+            <div class="right-content">
+                <div class="photo-text-white">
+                    <span>Rachel Dobyns</span>
+                    <span>Co-Founder/ Agent Resource Director</span>
+                </div>
+                <a href="https://www.instagram.com/itsracheldobyns/" target="_blank">
+                    <div class="photo">
+                        <img src="C:/Users/18437/Pictures/rachel suit.jpg" alt="Profile Photo">
+                    </div>
+                </a>
+                <h1>Welcome to Our Joint Venture</h1>
+                <p>Innovative solutions for your business needs with a touch of bright, modern aesthetics.</p>
+            </div>
+        </div>
+        <button class="middle-button">Solutions are a click away</button>
+    </div>
+</body>
+
+</html>
